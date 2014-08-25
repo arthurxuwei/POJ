@@ -72,7 +72,11 @@ void multi(int n) {
 		i++;
 	}
 	//remove '0'
-	int l = len-1;
+	len = 0;
+	while(res[len] != '\0') {
+		len++;
+	}
+	int l = len - 1;
 	while(res[l] == '0'){
 		res[l] = '\0';
 		l--;
