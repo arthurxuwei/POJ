@@ -23,15 +23,25 @@ void multi(int n) {
 		int i = 0;
 		int overflow = 0;
 		memcpy(&temp, &res, OSIZE+1);
+		if(k==0) {temp[0]='1';}
 		while(temp[i] != '\0') {
-			for(int j = 0; j < 5; j++) {
+			if(i==0) {
+				memset(&res, '\0', OSIZE+1);
+			}
+			int j;
+			for(j = 0; j < 5; j++) {
 				int t = (temp[i] - '0') * (b[j] - '0') + overflow;
 				overflow = t/10;
-				res[i+j] = (char)((int)'0' + t%10 );
+				if(res[i+j]=='\0')res[i+j]='0';
+				int t2 = (res[i+j] - '0') + t%10;
+				overflow += t2/10;
+				res[i+j] = (char)((int)'0' + t2%10 );
 			}
+			if(overflow>0) {res[i+j] = (char)((int)'0'+overflow);} 
+			cout << "#i" << i << ": res- " << res << " temp- " << temp << endl;
 			i++;overflow=0;
-			cout << "#" << i << ": " << res << endl;
 		}
+		cout << "#k" << k << ": " << res << endl;
 	}
 
 	//insert a dot
@@ -70,8 +80,6 @@ int main (int argc, char** argv) {
 	
 	while(cin>>a>>n) {
 		memset(res, '\0', sizeof(res));
-		res[0]='1';
-		temp[0]='1';
 		multi(n);
 		cout << res << endl;
 	}
