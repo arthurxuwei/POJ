@@ -75,7 +75,9 @@ void multi(int n) {
 	int l = len-1;
 	while(res[l] == '0'){
 		res[l] = '\0';
+		l--;
 	}
+	if(res[l] == '.'){ res[l] = '\0';}
 }
 
 
