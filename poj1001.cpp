@@ -17,7 +17,7 @@ void multi(int n) {
 		else {b[5-j-1] = a[i]; j++;}
 	}
 	p = (p-1) * n;
-	cout << "p: " << p << endl;
+	//cout << "p: " << p << endl;
 	//multi
 	for(int k=0; k<n;k++){	
 		int i = 0;
@@ -38,10 +38,10 @@ void multi(int n) {
 				res[i+j] = (char)((int)'0' + t2%10 );
 			}
 			if(overflow>0) {res[i+j] = (char)((int)'0'+overflow);} 
-			cout << "#i" << i << ": res- " << res << " temp- " << temp << endl;
+			//cout << "#i" << i << ": res- " << res << " temp- " << temp << endl;
 			i++;overflow=0;
 		}
-		cout << "#k" << k << ": " << res << endl;
+		//cout << "#k" << k << ": " << res << endl;
 	}
 
 	//insert a dot
@@ -53,7 +53,7 @@ void multi(int n) {
 		res[len-i] = res[len-i-1];	
 	}
 	res[p] = '.';
-	cout << "res: " << res << endl;
+	//cout << "res: " << res << endl;
 	if(res[len] == '0'){
 		res[len] == '\0';
 		len--;
@@ -62,7 +62,7 @@ void multi(int n) {
 
 	//reverse res array
 	len++;
-	cout << "len: " << len << endl;
+	//cout << "len: " << len << endl;
 
 	int i = 0;
 	while (i < len/2){
@@ -70,6 +70,11 @@ void multi(int n) {
 		res[i] = res[len-i-1];
 		res[len-i-1] = t;
 		i++;
+	}
+	//remove '0'
+	int l = len-1;
+	while(res[l] == '0'){
+		res[l] = '\0';
 	}
 }
 
