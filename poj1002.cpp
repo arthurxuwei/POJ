@@ -12,11 +12,13 @@ struct Phones{
 };
 
 bool strCom(char *str1, char *str2) {
-	for(;*str1!='\0' && *str2!='\0' && *str1 == *str2; str1++,str2++){
+	if(*str1 == '\0' || *str2 == '\0') {
+		return false;
 	}
-	if (*str1 == '\0' && *str2 == '\0')
-		return true;
-	return false;
+	for(;*str1!='\0' && *str2!='\0' && *str1 != *str2; str1++,str2++){
+		return false;
+	}
+	return true;
 }
 
 bool isLE(char *str1, char *str2) {
@@ -32,7 +34,7 @@ bool isLE(char *str1, char *str2) {
 	}
 	return true;
 }
-
+/*
 void sort(Phones p[], int n) {
 	bool ex = false;
 	for (int j = n; j>0; j--){
@@ -52,7 +54,35 @@ void sort(Phones p[], int n) {
 	if(!ex) {break;}
 	}
 }
+*/
 
+void swap(Phones *t1, Phones *t2) {
+	Phones t = *t1;
+	*t1 = *t2;
+	*t2 = t;
+}
+
+void sort(Phones p[], int begin, int end) {
+	if(begin>=end) return;
+	int min = (begin+end) /2;
+	int i=begin, j=end-1;
+	while(i <= j){
+		if (isLE(p[i].str, p[end].str)){
+			i++;continue;
+		}
+		if (!isLE(p[j].str, p[end].str)){
+			j--;continue;
+		}
+
+		swap(&p[i], &p[j]);
+		++i;
+		--j;
+	}
+
+	swap(&p[i], &p[end]);
+	sort(p, begin, i-1);
+	sort(p, i+1, end);
+}
 int main(int argc, char** argv) {
 	int n;
 	memset(&map, '0', sizeof(map));
@@ -105,13 +135,16 @@ int main(int argc, char** argv) {
 		}
 	}
 //	cout << "Start sorting..." << endl;
-	sort(phones, n);
+	sort(phones, 0, n-1);
 
 //	cout << "End sorting..." << endl;
+	int b = 0;
 	for(int i=0; i<n; i++) {
-		if(phones[i].str[0] != '\0' && phones[i].times > 1)
+		if(phones[i].str[0] != '\0' && phones[i].times > 1){
 			cout << phones[i].str[0] << phones[i].str[1] <<phones[i].str[2] << '-' <<phones[i].str[3]  << phones[i].str[4] << phones[i].str[5] << phones[i].str[6] << ' ' << phones[i].times << endl;
-	}
+		b++;
+	}}
+	if (b==0) { cout << "No duplicates." << endl;}
 
 	
 	return 0;
