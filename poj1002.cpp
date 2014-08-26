@@ -2,12 +2,12 @@
 #include <cstring>
 using namespace std;
 
-#define SIZE 20
+#define SIZE 50
 char a[SIZE];
 char map[256];
 
 struct Phones{
-	char str[SIZE];
+	char str[8];
 	int times;
 };
 
@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
 			i++;
 		}
 		a[7] = '\0';
-		memcpy(&phones[k].str, &a, sizeof(a));
+		memcpy(&phones[k].str, &a, 8);
 		phones[k].times = 1;
 	}
 	
