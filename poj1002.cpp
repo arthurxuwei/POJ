@@ -12,9 +12,6 @@ struct Phones{
 };
 
 bool strCom(char *str1, char *str2) {
-	if(*str1 == '\0' || *str2 == '\0') {
-		return false;
-	}
 	for(;*str1!='\0' && *str2!='\0' && *str1 == *str2; str1++,str2++){
 	}
 	if(*str1=='\0')
@@ -23,39 +20,12 @@ bool strCom(char *str1, char *str2) {
 }
 
 bool isLE(char *str1, char *str2) {
-	if(*str1 == '\0') {
-		return false;
-	}
-	if(*str2 == '\0') {
-		return true;
-	}
-	
-	for(;*str1!='\0'&&*str2!='\0'&&*str1 > *str2; str1++, str2++) {
-		return false;
+	while(*str1 != '\0') {
+		if(*str1 > *str2) return false;
+		else {str1++;str2++;}
 	}
 	return true;
 }
-/*
-void sort(Phones p[], int n) {
-	bool ex = false;
-	for (int j = n; j>0; j--){
-	for (int i = 1; i < j; i++) {
-//		cout << "isLE: " << isLE(p[i - 1].str,p[i].str) << ". " << p[i-1].str << " with " << p[i].str << endl; 
-		if(p[i-1].str[0] == '\0' && p[i].str[0]== '\0') 
-			continue;
-		if (isLE(p[i - 1].str, p[i].str)) {
-		}
-		else {
-			Phones t = p[i - 1];
-			p[i-1] = p[i];
-			p[i] = t;
-			ex = true;
-		}
-	}
-	if(!ex) {break;}
-	}
-}
-*/
 
 void swap(Phones *t1, Phones *t2) {
 	Phones t = *t1;
@@ -63,27 +33,32 @@ void swap(Phones *t1, Phones *t2) {
 	*t2 = t;
 }
 
-void sort(Phones p[], int begin, int end) {
-	if(begin>=end) return;
+int partition(Phones p[], int begin, int end) {
 	int min = (begin+end) /2;
-	int i=begin, j=end-1;
-	while(i <= j){
-		if (isLE(p[i].str, p[end].str)){
-			i++;continue;
+	Phones k = p[begin];
+	int i=begin,j;
+	for(j=begin+1;j<=end;j++) {
+		//cout << "isLE: " << isLE(p[j].str, k.str) << " p: " <<p[j].str << " k: " <<k.str<<endl;
+		if(isLE(p[j].str, k.str)) {
+			i++;
+			swap(&p[i], &p[j]);
 		}
-		if (!isLE(p[j].str, p[end].str)){
-			j--;continue;
-		}
-
-		swap(&p[i], &p[j]);
-		++i;
-		--j;
 	}
 
-	swap(&p[i], &p[end]);
-	sort(p, begin, i-1);
-	sort(p, i+1, end);
+	swap(&p[i], &p[begin]);
+	return i;
 }
+
+void sort(Phones p[], int begin, int end) {
+	if(begin < end) {
+		int pivot = partition(p, begin, end);
+
+		sort(p, begin, pivot-1);
+		sort(p, pivot+1, end);
+	}
+}
+
+
 int main(int argc, char** argv) {
 	int n;
 	memset(&map, '0', sizeof(map));
@@ -120,25 +95,23 @@ int main(int argc, char** argv) {
 			i++;
 		}
 		a[7] = '\0';
-		int j = n-1;
-		for(; j>=0; j--) {
-//			cout << "Strat Compare: " << phones[j].str << " and " << a << endl;
-//			cout << "compare result: " << strCom(phones[j].str, a) << endl;
-			if(strCom(phones[j].str, a)) {
-				phones[j].times++;
-				break;
-			} 
-		}
-		if (j < 0) 
-		{
-			memcpy(&phones[k].str, &a, sizeof(a));
-			phones[k].times = 1;
-		}
+		memcpy(&phones[k].str, &a, sizeof(a));
+		phones[k].times = 1;
 	}
+	
 //	cout << "Start sorting..." << endl;
 	sort(phones, 0, n-1);
 
 //	cout << "End sorting..." << endl;
+	for (int i=1,j=0; i<n; i++) {
+	//	cout << phones[j].str  << " vs " <<  phones[i].str << " is: " <<strCom(phones[j].str, phones[i].str)<< endl;
+		if(strCom(phones[j].str, phones[i].str)) {
+			phones[j].times++;
+		} else {
+			j = i;
+		}
+	}
+
 	int b = 0;
 	for(int i=0; i<n; i++) {
 		if(phones[i].str[0] != '\0' && phones[i].times > 1){
