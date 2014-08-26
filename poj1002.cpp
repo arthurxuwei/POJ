@@ -15,10 +15,11 @@ bool strCom(char *str1, char *str2) {
 	if(*str1 == '\0' || *str2 == '\0') {
 		return false;
 	}
-	for(;*str1!='\0' && *str2!='\0' && *str1 != *str2; str1++,str2++){
-		return false;
+	for(;*str1!='\0' && *str2!='\0' && *str1 == *str2; str1++,str2++){
 	}
-	return true;
+	if(*str1=='\0')
+		return true;
+	return false;
 }
 
 bool isLE(char *str1, char *str2) {
