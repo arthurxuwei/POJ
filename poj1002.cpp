@@ -26,7 +26,7 @@ bool isLE(char *str1, char *str2) {
 	if(*str2 == '\0') {
 		return true;
 	}
-
+	
 	for(;*str1!='\0'&&*str2!='\0'&&*str1 > *str2; str1++, str2++) {
 		return false;
 	}
@@ -34,17 +34,23 @@ bool isLE(char *str1, char *str2) {
 }
 
 void sort(Phones p[], int n) {
+	bool ex = false;
 	for (int j = n; j>0; j--){
 	for (int i = 1; i < j; i++) {
 //		cout << "isLE: " << isLE(p[i - 1].str,p[i].str) << ". " << p[i-1].str << " with " << p[i].str << endl; 
+		if(p[i-1].str[0] == '\0' && p[i].str[0]== '\0') 
+			continue;
 		if (isLE(p[i - 1].str, p[i].str)) {
 		}
 		else {
 			Phones t = p[i - 1];
 			p[i-1] = p[i];
 			p[i] = t;
+			ex = true;
 		}
-	}}
+	}
+	if(!ex) {break;}
+	}
 }
 
 int main(int argc, char** argv) {
