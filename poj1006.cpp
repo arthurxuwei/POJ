@@ -47,7 +47,7 @@ int main() {
 		for (int i = 0; i < 924; ++i) {
 //			cout << has(arr2, 759, arr1[i]) << has(arr3, 644, arr1[i]) << endl;
 			if( has(arr2, 759, arr1[i]) && has(arr3, 644, arr1[i]) && arr1[i] >= d) {
-				cout << "Case " << n << ": the nex triple peak occurs in " << arr1[i] - d << " days." << endl;
+				cout << "Case " << n << ": the next triple peak occurs in " << arr1[i] - d << " days." << endl;
 				break;
 			}
 		}
