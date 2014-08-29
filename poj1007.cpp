@@ -11,7 +11,7 @@ void swap(DNA *a, DNA *b) {
 	*b = *a;
 	*a = t;
 }
-
+/*
 int partation(DNA a[], int begin, int end) {
 	int i =begin, j = 0;
 	int v = a[begin].dis;
@@ -33,17 +33,18 @@ void sort(DNA a[], int begin, int end) {
 		sort(a, p+1, end);
 	}
 }
-/*
-void sort(char **a, int m, int n) {
+*/
+
+void sort(DNA a[], int n,int m) {
 	for( int i=m-1; i >=0; --i) {
 		for( int j=0; j < i;++j) {
-			if(a[j][n-1]-'0' > a[j+1][n-1]-'0' ){
-				swap(a[j], a[j+1]);
+			if(a[j].dis > a[j+1].dis ){
+				swap(&a[j], &a[j+1]);
 			}
 		}
 	}
 }
-*/
+
 
 int main () {
 	int n = 0, m = 0;
@@ -59,14 +60,11 @@ int main () {
 			for(int k=j+1; k<n; k++) {
 				if(arr[i].dna[j] > arr[i].dna[k]){
 					len++;
-				} else continue;
+				};
 			}
 		}
 		arr[i].dis = len;
 		len = 0;
-	}
-	for(int i=0; i< m; i++) {
-		cout << "c: " << arr[i].dis << endl;
 	}
 
 	sort(arr, 0, m);
