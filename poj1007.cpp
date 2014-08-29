@@ -2,36 +2,38 @@
 #include <cstring>
 using namespace std;
 
-void swap(char *&a, char *&b) {
-	char *t;
-	t = b;
-	b = a;
-	a = t;
+struct DNA{
+	char *dna;
+	int dis;
+};
+void swap(DNA *a, DNA *b) {
+	DNA t = *b;
+	*b = *a;
+	*a = t;
 }
-/*
-int partation(char **a, int begin, int end, int n) {
+
+int partation(DNA a[], int begin, int end) {
 	int i =begin, j = 0;
-	int v = a[begin][n-1] - '0';
+	int v = a[begin].dis;
 	for(j = begin+1; j <= end -1;j++){
-		cout << "v1,v2: " << a[i][n-1]-'0' << " " << v << endl;
-		if (a[j][n-1] - '0' <= v) {
+		if (a[j].dis <= v) {
 			++i;
-			swap(a[i], a[j], n);
+			swap(&a[i], &a[j]);
 		} 
 	}
-	swap(a[i], a[begin], n);
+	swap(&a[i], &a[begin]);
 	return i;
 }
 
 
-void sort(char **a, int begin, int end, int n) {
+void sort(DNA a[], int begin, int end) {
 	if(begin < end) {
-		int p = partation(a, begin, end, n);
-		sort(a, begin, p-1,n);
-		sort(a, p+1, end, n);
+		int p = partation(a, begin, end);
+		sort(a, begin, p-1);
+		sort(a, p+1, end);
 	}
 }
-*/
+/*
 void sort(char **a, int m, int n) {
 	for( int i=m-1; i >=0; --i) {
 		for( int j=0; j < i;++j) {
@@ -41,38 +43,36 @@ void sort(char **a, int m, int n) {
 		}
 	}
 }
+*/
 
 int main () {
 	int n = 0, m = 0;
 	cin >> n >> m;
-	char **str = new char *[m];
-	for( int i=0; i < m; i++)
-		str[i] = new char[n+2];
+	DNA arr[m];
 	for(int i=0;i<m;i++){
-		cin >> str[i];
-		str[i][n+1] = '0';
+		arr[i].dna = new char[n+1];
+		cin >> arr[i].dna;
 	}
 	int len = 0;
 	for(int i=0; i < m; i++) {
 		for(int j=0; j<n-1;j++){
 			for(int k=j+1; k<n; k++) {
-				if(str[i][j] > str[i][k]){
+				if(arr[i].dna[j] > arr[i].dna[k]){
 					len++;
 				} else continue;
 			}
 		}
-		cout << "t: " << len << endl;
-		str[i][n+1] = (char)((int)'0'+len);
-		len=0;
+		arr[i].dis = len;
+		len = 0;
 	}
 	for(int i=0; i< m; i++) {
-		cout << "c: " << str[i][n+1] << endl;
+		cout << "c: " << arr[i].dis << endl;
 	}
 
-	sort(str, m, n+2);
+	sort(arr, 0, m);
 
 	for( int i=0; i<m; i++) {
-		cout << str[i] << endl;
+		cout << arr[i].dna << endl;
 	}
 
 }
