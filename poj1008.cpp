@@ -30,8 +30,7 @@ int main () {
 				break;
 			}
 		}		
-		if(mon == 18) mon = 5;
-		else mon = mon*20;
+		mon = mon*20;
 		int sum = year*365 + mon + day;
 //		cout << "sum: " << sum << " day: " << day << " month: " << mon << " year: " << year << endl;	
 		int year2 = sum / 260;
