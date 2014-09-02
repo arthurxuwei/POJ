@@ -31,11 +31,11 @@ int getcode(int pos, int row, int col) {
 
 	for (int i = row-1; i <= row+1; ++i)
 		for (int j = col-1; j <= col+1; ++j) {
-			int tpos= i*width+j;
-			if( i<0 || j<0 || j>=width || tpos >= tot || tpos == pos-1)
+			int tpos= i*width+j+1;
+			if( i<0 || j<0 || j>=width || tpos >= tot || tpos == pos)
 				continue;
 
-			int tmp = getnum(tpos+1);
+			int tmp = getnum(tpos);
 			if(abs(tmp-num)>ret) ret = abs(tmp-num);
 		}
 	return ret;
@@ -66,12 +66,12 @@ int main() {
 			
 			for(int i=row-1; i <= row+1; i++) {
 				for(int j=col-1; j <= col+1; j++) {
-					int tpos = i*width + j;
+					int tpos = i*width + j+1;
 					if (i<0 || j<0 || j>=width ||tpos >= tot)
 						continue;
 
-					outmap[k].pos = tpos+1;
-					outmap[k++].code = getcode(tpos+1, i, j);
+					outmap[k].pos = tpos-1;
+					outmap[k++].code = getcode(tpos, i, j);
 				}
 			}
 			pos+=inmap[p][1];
