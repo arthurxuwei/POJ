@@ -58,7 +58,14 @@ int main() {
 		for (int p=0; p<= cntp; p++) {
 			int row = (pos-1) / width;
 			int col = (pos-1) % width;
-
+			
+			if(col == width-1) {
+				if ((row+2)*width <tot) {
+					outmap[k].pos = pos+width+1;
+					outmap[k++].code = getcode(pos+width+1);
+				}
+			}
+			
 			for(int i=row-1; i <= row+1; i++) {
 				for(int j=col-1; j <= col+1; j++) {
 					int tpos = i*width + j;
