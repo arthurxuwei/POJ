@@ -25,11 +25,9 @@ int getnum(int pos) {
 	return inmap[i-1][0];
 }
 
-int getcode(int pos) {
+int getcode(int pos, int row, int col) {
 	int num = getnum(pos), ret=0;
 
-	int row=(pos-1)/width;
-	int col=(pos-1)%width;
 
 	for (int i = row-1; i <= row+1; ++i)
 		for (int j = col-1; j <= col+1; ++j) {
@@ -61,8 +59,8 @@ int main() {
 			
 			if(col == width-1) {
 				if ((row+2)*width <tot) {
-					outmap[k].pos = pos+width+1;
-					outmap[k++].code = getcode(pos+width+1);
+					outmap[k].pos = pos+width;
+					outmap[k++].code = getcode(pos+width+1, row+2, 0);
 				}
 			}
 			
@@ -73,7 +71,7 @@ int main() {
 						continue;
 
 					outmap[k].pos = tpos+1;
-					outmap[k++].code = getcode(tpos+1);
+					outmap[k++].code = getcode(tpos+1, i, j);
 				}
 			}
 			pos+=inmap[p][1];
