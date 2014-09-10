@@ -1,17 +1,19 @@
 #include<iostream>
 using namespace std;
 int val = 0;
-bool find(int a[], int n, int cur, int sum) {
+int find(int a[], int n, int cur, int sum) {
 	//cout << "sum: " << sum << " cur: " << cur << endl;
 	if( sum == val )
-		return true;
+		return 1;
 	else if(sum > val)
-		return false;
+		return 2;
 	else for(int i=cur; i < n; i++ ){
-		if(find(a, n, i+1, sum+a[i])) return true;
+		int v = find(a, n, i+1, sum+a[i]);
+		if(v==2) break;
+		else if(v==1) return 1;
 		while(a[i] == a[i+1]) ++i;
 	}
-	return false;
+	return 0;
 }
 
 main() {
@@ -27,8 +29,13 @@ main() {
 		}
 		if(count == 0) break;
 
-		for(int i = 0; i<6;i++){
-			sum += arr[i]*(i+1);
+		int t[count];
+		for(int i=0,j=0; i<6;){
+			if(arr[i]) {
+				t[j++] = i+1;
+				sum += (i+1);
+				arr[i]--;
+			}else i++;
 		}
 		if(sum%2) {
 			cout << "Collection #" << n << ":\nCan't be divided." << endl;  
@@ -36,17 +43,10 @@ main() {
 		}
 		val = sum / 2;
 	//	cout << "val: " << val << endl;
-		int t[count];
-		for(int i=0,j=0; i<6;){
-			if(arr[i]) {
-				t[j++] = i+1;
-				arr[i]--;
-			}else i++;
-		}
 //		for(int i=0; i<count;i++)
 //			cout << t[i];
 //		cout << endl;
-		if(find(t, count, 0, 0))
+		if(find(t, count, 0, 0)==1)
 			cout << "Collection #" << n << ":\nCan be divided." << endl;  
 		else
 			cout << "Collection #" << n << ":\nCan't be divided." << endl;  
