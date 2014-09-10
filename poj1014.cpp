@@ -1,19 +1,17 @@
 #include<iostream>
 using namespace std;
 int val = 0;
-int find(int a[], int n, int cur, int sum) {
+bool find(int a[], int n, int cur, int sum) {
 	//cout << "sum: " << sum << " cur: " << cur << endl;
 	if( sum == val )
-		return 1;
-	else if(sum > val)
-		return 2;
+		return true;
 	else for(int i=cur; i < n; i++ ){
-		int v = find(a, n, i+1, sum+a[i]);
-		if(v==2) break;
-		else if(v==1) return 1;
-		while(a[i] == a[i+1]) ++i;
+		if(sum+ a[i] <= val) { 
+			if(find(a, n, i+1, sum+a[i])) return true;
+			while(a[i] == a[i+1]) ++i;
+		}
 	}
-	return 0;
+	return false;
 }
 
 main() {
@@ -39,6 +37,7 @@ main() {
 		}
 		if(sum%2) {
 			cout << "Collection #" << n << ":\nCan't be divided." << endl;  
+			n++;
 			continue;
 		}
 		val = sum / 2;
@@ -46,7 +45,7 @@ main() {
 //		for(int i=0; i<count;i++)
 //			cout << t[i];
 //		cout << endl;
-		if(find(t, count, 0, 0)==1)
+		if(find(t, count, 0, 0))
 			cout << "Collection #" << n << ":\nCan be divided." << endl;  
 		else
 			cout << "Collection #" << n << ":\nCan't be divided." << endl;  
