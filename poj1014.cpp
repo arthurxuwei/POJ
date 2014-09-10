@@ -9,6 +9,7 @@ bool find(int a[], int n, int cur, int sum) {
 		return false;
 	else for(int i=cur; i < n; i++ ){
 		if(find(a, n, i+1, sum+a[i])) return true;
+		while(a[i] == a[i+1]) ++i;
 	}
 	return false;
 }
@@ -42,13 +43,14 @@ main() {
 				arr[i]--;
 			}else i++;
 		}
-		for(int i=0; i<count;i++)
-			cout << t[i];
-		cout << endl;
+//		for(int i=0; i<count;i++)
+//			cout << t[i];
+//		cout << endl;
 		if(find(t, count, 0, 0))
 			cout << "Collection #" << n << ":\nCan be divided." << endl;  
 		else
 			cout << "Collection #" << n << ":\nCan't be divided." << endl;  
+		n++;
 	}
 }
 
